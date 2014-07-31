@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+cd /home/ymst/ymst/
+git --git-dir=.git reset --hard HEAD

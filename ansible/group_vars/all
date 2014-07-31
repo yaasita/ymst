@@ -1,0 +1,6 @@
+---
+
+# メールサーバのドメイン
+ml_domain: yourserver.example.com
+# ymstリポジトリ
+ymst_repo: https://github.com/yaasita/ymst.git

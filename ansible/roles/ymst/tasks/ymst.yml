@@ -1,0 +1,19 @@
+---
+
+- name: mkdir .ssh
+  file: path=/home/ymst/.ssh state=directory
+
+- name: authorized_keys
+  copy: src=authorized_keys dest=/home/ymst/.ssh/authorized_keys
+
+- name: forward file
+  copy: src=forward dest=/home/ymst/.forward
+
+- name: git clone
+  git: repo={{ ymst_repo }} dest=/home/ymst/ymst
+
+- name: git config
+  template: src=gitconfig.j2 dest=/home/ymst/ymst/.git/config
+
+- name: hook post-receive
+  copy: src=post-receive dest=/home/ymst/ymst/.git/hooks/post-receive mode=0755

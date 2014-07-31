@@ -1,0 +1,7 @@
+---
+- name: メーリングリストサーバの設定
+  hosts: ml-server
+  sudo: yes
+
+  roles:
+    - ymst

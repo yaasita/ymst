@@ -1,0 +1,2 @@
+[ml-server]
+yourserver.eample.com ansible_ssh_user='yourname' ansible_sudo_pass='yourpasswd'

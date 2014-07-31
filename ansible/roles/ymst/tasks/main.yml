@@ -1,0 +1,28 @@
+---
+
+- name: apt-get update
+  action: apt update_cache=yes
+
+- name: package install
+  apt: pkg={{ item }} state=installed
+  with_items:
+   - postfix
+   - ruby
+   - ruby-bundler
+   - ruby-mail
+   - git
+
+- name: postfix conf
+  template: src=main.cf.j2 dest=/etc/postfix/main.cf
+  notify: restart postfix
+
+- name: alias file
+  template: src=aliases.reg.j2 dest=/etc/postfix/aliases.reg
+  notify: restart postfix
+
+- name: create ml user
+  user: name=ymst shell=/bin/bash
+
+- include: ymst.yml
+  sudo: yes
+  sudo_user: "ymst"
