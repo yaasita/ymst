@@ -16,7 +16,7 @@ yaml例
       - member6@example.com
 
 この場合,`mltest1@ml.example.com`に送れば
-以下アドレスに送られる
+以下アドレスに送られます
 
 - member1@example.com
 - member2@example.com
@@ -24,34 +24,40 @@ yaml例
 
 ## インストール
 
+### 準備
+
 - サーバを用意しログインできるようにしておく(ubuntu14.04で動作確認済)
 - MXレコードを設定しておく
 - [ansible](http://www.ansible.com/)をインストールしておく
 
-自分の公開鍵を登録する
+### 設定ファイル
 
-    wget --no-check-certificate https://github.com/yourname.keys -O - >> ansible/roles/ymst/files/authorized_keys
+1. `ansible/roles/ymst/files/authorized_keys`
+    自分の公開鍵を登録する
 
-`ansible/ansible_hosts`を編集し、ログインできるホスト名、ユーザ名、sudoパスワード等設定する
+        wget --no-check-certificate https://github.com/yourname.keys -O - >> ansible/roles/ymst/files/authorized_keys
+2. `ansible/ansible_hosts`
+ログインできるホスト名、ユーザ名、sudoパスワード等設定する
 
-    yourserver.eample.com ansible_ssh_user='yourname' ansible_sudo_pass='yourpasswd'
+        yourserver.eample.com ansible_ssh_user='yourname' ansible_sudo_pass='yourpasswd'
+3. `ansible/group_vars/all`
+サーバのドメインに変更する
 
-`ansible/group_vars/all`を編集し、サーバのドメインに変更する
+        # メールサーバのドメイン
+        ml_domain: yourserver.example.com
+4. ansible実行
 
-    # メールサーバのドメイン
-    ml_domain: yourserver.example.com
+        cd ansible
+        ansible-playbook site.yml
 
-ansible実行
+### 設定変更
 
-    cd ansible
-    ansible-playbook site.yml
-
-設定変更
+deployしたサーバのgitリポジトリに直接pushして反映
 
     git clone ymst@yourserver.eample.com:ymst
     cd ymst
     vi mail.yml
-    git push
+    git add mail.yml && git commit -m "mod ml" && git push
 
 ## 仕組み
 
